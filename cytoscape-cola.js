@@ -206,7 +206,7 @@ ColaLayout.prototype.run = function () {
     cy.off('destroy', destroyHandler);
 
     nodes.off('grab free position', grabHandler);
-    nodes.off('lock unlock', lockHandler);
+    nodes.off('lock unlock layoutLock layoutUnlock', lockHandler);
 
     // trigger layoutstop when the layout stops (e.g. finishes)
     layout.one('layoutstop', options.stop);
@@ -355,7 +355,7 @@ ColaLayout.prototype.run = function () {
   });
 
   var lockHandler = void 0;
-  nodes.on('lock unlock', lockHandler = function lockHandler() {
+  nodes.on('lock unlock layoutLock layoutUnlock', lockHandler = function lockHandler() {
     var node = this;
     var scrCola = node.scratch().cola;
 
