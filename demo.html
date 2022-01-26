@@ -47,14 +47,15 @@
 					boxSelectionEnabled: false,
 
 					layout: {
-						name: 'cola'
+						name: 'cola', infinite: true
 					},
 
 					style: [
 						{
 							selector: 'node',
 							css: {
-								'background-color': '#f92411'
+								'background-color': '#f92411',
+								'label': 'data(id)'
 							}
 						},
 
@@ -71,7 +72,8 @@
 					    {
 					      data: {
 					        id: "1",
-					        label: "P"
+					        label: "P",
+						    layoutLocked: true,
 					      }
 					    },
 					    {
