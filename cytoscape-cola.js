@@ -359,9 +359,9 @@ ColaLayout.prototype.run = function () {
     var node = this;
     var scrCola = node.scratch().cola;
 
-    scrCola.fixed = node.locked() || node.data('userLocked');
+    scrCola.fixed = node.locked() || node.data('layoutLocked');
 
-    if (node.locked() || node.data('userLocked')) {
+    if (node.locked() || node.data('layoutLocked')) {
       adaptor.dragstart(scrCola);
     } else {
       adaptor.dragend(scrCola);
@@ -375,12 +375,12 @@ ColaLayout.prototype.run = function () {
     var dimensions = node.layoutDimensions(options);
 
     var struct = node.scratch().cola = {
-      x: options.randomize && !(node.locked() || node.data('userLocked')) || pos.x === undefined ? Math.round(Math.random() * bb.w) : pos.x,
-      y: options.randomize && !(node.locked() || node.data('userLocked')) || pos.y === undefined ? Math.round(Math.random() * bb.h) : pos.y,
+      x: options.randomize && !(node.locked() || node.data('layoutLocked')) || pos.x === undefined ? Math.round(Math.random() * bb.w) : pos.x,
+      y: options.randomize && !(node.locked() || node.data('layoutLocked')) || pos.y === undefined ? Math.round(Math.random() * bb.h) : pos.y,
       width: dimensions.w + 2 * padding,
       height: dimensions.h + 2 * padding,
       index: i,
-      fixed: node.locked() || node.data('userLocked')
+      fixed: node.locked() || node.data('layoutLocked')
     };
 
     return struct;
@@ -483,7 +483,7 @@ ColaLayout.prototype.run = function () {
         return child[0].scratch().cola.index;
       }),
 
-      fixed: node.locked() || node.data('userLocked')
+      fixed: node.locked() || node.data('layoutLocked')
     };
 
     return node;
