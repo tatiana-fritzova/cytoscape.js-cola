@@ -1,5 +1,5 @@
 {
-  "name": "cytoscape-cola",
+  "name": "cytoscape-cola-with-layout-locking",
   "version": "2.5.0",
   "description": "The Cola.js physics simulation layout for Cytoscape.js",
   "main": "cytoscape-cola.js",
