@@ -359,9 +359,9 @@ ColaLayout.prototype.run = function () {
     var node = this;
     var scrCola = node.scratch().cola;
 
-    scrCola.fixed = node.locked() || node.data('layoutLocked');
+    scrCola.fixed = options.isLocked(node);
 
-    if (node.locked() || node.data('layoutLocked')) {
+    if (options.isLocked(node)) {
       adaptor.dragstart(scrCola);
     } else {
       adaptor.dragend(scrCola);
@@ -375,12 +375,12 @@ ColaLayout.prototype.run = function () {
     var dimensions = node.layoutDimensions(options);
 
     var struct = node.scratch().cola = {
-      x: options.randomize && !(node.locked() || node.data('layoutLocked')) || pos.x === undefined ? Math.round(Math.random() * bb.w) : pos.x,
-      y: options.randomize && !(node.locked() || node.data('layoutLocked')) || pos.y === undefined ? Math.round(Math.random() * bb.h) : pos.y,
+      x: options.randomize && !options.isLocked(node) || pos.x === undefined ? Math.round(Math.random() * bb.w) : pos.x,
+      y: options.randomize && !options.isLocked(node) || pos.y === undefined ? Math.round(Math.random() * bb.h) : pos.y,
       width: dimensions.w + 2 * padding,
       height: dimensions.h + 2 * padding,
       index: i,
-      fixed: node.locked() || node.data('layoutLocked')
+      fixed: options.isLocked(node)
     };
 
     return struct;
@@ -483,7 +483,7 @@ ColaLayout.prototype.run = function () {
         return child[0].scratch().cola.index;
       }),
 
-      fixed: node.locked() || node.data('layoutLocked')
+      fixed: options.isLocked(node)
     };
 
     return node;
@@ -659,6 +659,10 @@ var defaults = {
   alignment: undefined, // relative alignment constraints on nodes, e.g. function( node ){ return { x: 0, y: 1 } }
   gapInequalities: undefined, // list of inequality constraints for the gap between the nodes, e.g. [{"axis":"y", "left":node1, "right":node2, "gap":25}]
   centerGraph: true, // adjusts the node positions initially to center the graph (pass false if you want to start the layout from the current position)
+  isLocked: function isLocked(node) {
+    return node.locked();
+  }, // defines condition for considering a node to be locked
+  lockEvents: 'lock unlock', // defines events which are emitted when changing state with impact on isLocked return value
 
 
   // different methods of specifying edge length

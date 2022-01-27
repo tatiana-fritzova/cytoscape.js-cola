@@ -1,6 +1,9 @@
 cytoscape-cola
 ================================================================================
 
+This package is based on the [original implementation](https://github.com/cytoscape/cytoscape.js-cola) by Max Franz. It adds support for locking nodes only for layout. That way, after a user drags and frees a node in a position, it stays put there. Unlike with locking supported natively by cytoscape, the user is able to grab the node and put it somewhere else without the need to unlock it, i.e. it is only considered to be locked by the layout. It is inspired by the way physics is simulated in [vis.js](https://visjs.org/). To try the demo, see `demo-custom-lock-handling.html`. 
+
+
 [![DOI](https://zenodo.org/badge/42205998.svg)](https://zenodo.org/badge/latestdoi/42205998)
 
 
@@ -87,7 +90,11 @@ var defaults = {
   flow: undefined, // use DAG/tree flow layout if specified, e.g. { axis: 'y', minSeparation: 30 }
   alignment: undefined, // relative alignment constraints on nodes, e.g. {vertical: [[{node: node1, offset: 0}, {node: node2, offset: 5}]], horizontal: [[{node: node3}, {node: node4}], [{node: node5}, {node: node6}]]}
   gapInequalities: undefined, // list of inequality constraints for the gap between the nodes, e.g. [{"axis":"y", "left":node1, "right":node2, "gap":25}]
-
+  isLocked: function isLocked(node) {
+    return node.locked();
+  }, // defines condition for considering a node to be locked
+  lockEvents: 'lock unlock', // defines events which are emitted when changing state with impact on isLocked return value
+  
   // different methods of specifying edge length
   // each can be a constant numerical value or a function like `function( edge ){ return 2; }`
   edgeLength: undefined, // sets edge length directly in simulation
